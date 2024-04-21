@@ -1,0 +1,10 @@
+<RCC>
+  <qresource prefix="rcs">
+    <file>stylesheet.qss</file>
+    <file>ice.png</file>
+    <file>unvisible.png</file>
+    <file>unvisible_hover.png</file>
+    <file>visible.png</file>
+    <file>visible_hover.png</file>
+  </qresource>
+</RCC>

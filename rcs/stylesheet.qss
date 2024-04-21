@@ -1,0 +1,9 @@
+QDialog#loginDialog,
+#registerDialog {
+    background-color: white;
+}
+
+/* #userLabel,
+#passLabel {
+    color: black;
+} */
