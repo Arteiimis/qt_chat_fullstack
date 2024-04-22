@@ -1,12 +1,5 @@
 add_rules("mode.debug", "mode.release")
 
-add_requires("jsoncpp", {
-    alias = "jsoncpp",
-    configs={
-        runtimes="MD",
-    }   
-})
-
 target("qt_chat_fullstack")
     add_rules("qt.widgetapp","qt.quickapp")
     set_languages("cxx20")
@@ -20,7 +13,7 @@ target("qt_chat_fullstack")
 
     set_toolchains("clang-cl")
     add_ldflags("/subsystem:console")
-    add_packages("jsoncpp")
+    add_packages("jsoncpp", "boost")
 target_end()
 
 --

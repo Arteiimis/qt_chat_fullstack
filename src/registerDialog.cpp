@@ -1,6 +1,7 @@
 #include "global.h"
 #include "httpMgr.h"
 #include "qdialog.h"
+#include "qlogging.h"
 #include "qobject.h"
 #include "qpushbutton.h"
 #include "registerDialog.h"
@@ -16,6 +17,7 @@ registerDialog::registerDialog(QWidget* parent)
     refreshStyle(ui->errorHint);
     // 禁用按下 esc 退出
 
+    initHttpHandlers();
     connectSlots();
 }
 
@@ -31,6 +33,20 @@ void registerDialog::showErrTip(QString msg, bool signal) {
         ui->errorHint->setProperty("state", "error");
     }
     refreshStyle(ui->errorHint);
+}
+
+void registerDialog::initHttpHandlers() {
+    // 注册获取验证码回包逻辑
+    _handlers.insert(reqID::ID_GET_VERIFY_CODE, [this](const QJsonObject& json_obj) {
+        int error = json_obj.value("error").toInt();
+        if ( error != errorCodes::SUCESS ) {
+            showErrTip("获取验证码失败", false);
+            return;
+        }
+        auto email = json_obj.value("email").toString();
+        showErrTip("验证码已发送至邮箱：" + email, true);
+        qDebug() << "email is: " << email;
+    });
 }
 
 void registerDialog::connectSlots() {
