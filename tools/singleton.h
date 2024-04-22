@@ -23,6 +23,7 @@ public:
         // call_once 可以精准的保证只被调用一次
         static std::once_flag flag;
         std::call_once(flag, [&]() { _instence = std::shared_ptr<T>(new T); });
+        return _instence;
     }
 
     void get_raw() { qDebug() << _instence.get(); }

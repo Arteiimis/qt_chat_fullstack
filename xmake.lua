@@ -16,6 +16,7 @@ target("qt_chat_fullstack")
     add_files("rcs/*.qrc")
     -- add files with Q_OBJECT meta (only for qt.moc)
     add_files("src/*.h")
+    add_files("tools/*.h")
 
     set_toolchains("clang-cl")
     add_ldflags("/subsystem:console")
