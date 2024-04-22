@@ -1,11 +1,13 @@
+#include "global.h"
+#include "httpMgr.h"
+#include "qdialog.h"
 #include "qobject.h"
 #include "qpushbutton.h"
 #include "registerDialog.h"
-#include <global.h>
-#include <regex>
 
 
-registerDialog::registerDialog(QWidget* parent) : QDialog(parent), ui(new Ui::registerDialog) {
+registerDialog::registerDialog(QWidget* parent)
+    : QDialog(parent), ui(new Ui::registerDialog) {
     ui->setupUi(this);
     setWindowFlag(Qt::WindowContextHelpButtonHint, false);
     ui->pwdEdit->setEchoMode(QLineEdit::Password);
@@ -32,11 +34,19 @@ void registerDialog::showErrTip(QString msg, bool signal) {
 }
 
 void registerDialog::connectSlots() {
+    // 注册按钮
     connect(ui->cancelBtn, &QPushButton::clicked, this, &registerDialog::cancelRegister);
+
+    // 获取验证码按钮
     connect(ui->getValidCodeBtn,
             &QPushButton::clicked,
             this,
             &registerDialog::on_getVerifyCodeButton_clicked);
+    // 注册成功
+    connect(httpManager::getInstence().get(),
+            &httpManager::SIG_registFinished,
+            this,
+            &registerDialog::SLOT_registFinished);
 }
 
 void registerDialog::on_getVerifyCodeButton_clicked() {
@@ -49,4 +59,29 @@ void registerDialog::on_getVerifyCodeButton_clicked() {
     } else {
         showErrTip("邮箱格式错误", false);
     }
+}
+
+void registerDialog::SLOT_registFinished(reqID id, QString res_data, errorCodes code) {
+    if ( code != errorCodes::SUCESS ) {
+        showErrTip("网络错误", false);
+        return;
+    }
+
+    // 解析 JSON 字符串， res 转化为 QByteArray
+    QJsonDocument json_doc = QJsonDocument::fromJson(res_data.toUtf8());
+    if ( json_doc.isNull() ) {
+        showErrTip(tr("json解析失败"), false);
+        return;
+    }
+
+    // 解析 JSON 对象失败处理：
+    if ( !json_doc.isObject() ) {
+        showErrTip(tr("json解析失败"), false);
+        return;
+    }
+
+    json_doc.object();
+    // TODO: 解析 JSON 对象
+
+    return;
 }

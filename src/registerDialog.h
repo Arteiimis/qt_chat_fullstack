@@ -1,11 +1,10 @@
 #ifndef REGISTERDIALOG_H
 #define REGISTERDIALOG_H
 
-#include "qdialog.h"
-#include "qobject.h"
-#include "qtmetamacros.h"
-#include <ui_registerDialog.h>
 #include <QPushButton>
+#include <global.h>
+#include <ui_registerDialog.h>
+#include <regex>
 
 class registerDialog : public QDialog
 {
@@ -24,6 +23,7 @@ signals:
 
 private slots:
     void on_getVerifyCodeButton_clicked();
+    void SLOT_registFinished(reqID id, QString res_data, errorCodes code);
 
 private:
     Ui::registerDialog* ui;
