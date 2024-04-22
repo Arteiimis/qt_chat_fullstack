@@ -21,6 +21,7 @@ public:
 
 public slots:
     void switchRegister();
+    void cancelRegister();
 
 private:
     Ui::MainWindow* ui;

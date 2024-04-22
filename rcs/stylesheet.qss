@@ -3,6 +3,14 @@ QDialog#loginDialog,
     background-color: white;
 }
 
+#errorHint[state='normal'] {
+    color: green;
+}
+
+#errorHint[state='error'] {
+    color: red;
+}
+
 /* #userLabel,
 #passLabel {
     color: black;
