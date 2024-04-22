@@ -1,16 +1,25 @@
 add_rules("mode.debug", "mode.release")
 
+add_requires("jsoncpp", {
+    alias = "jsoncpp",
+    configs={
+        runtimes="MD",
+    }   
+})
+
 target("qt_chat_fullstack")
     add_rules("qt.widgetapp","qt.quickapp")
     set_languages("cxx20")
-    add_includedirs("src")
-    add_files("src/*.cpp")
+    add_includedirs("src", "tools")
+    add_files("src/*.cpp","tools/*.cpp")
     add_files("uis/*.ui")
     add_files("rcs/*.qrc")
     -- add files with Q_OBJECT meta (only for qt.moc)
     add_files("src/*.h")
+
     set_toolchains("clang-cl")
     add_ldflags("/subsystem:console")
+    add_packages("jsoncpp")
 target_end()
 
 --

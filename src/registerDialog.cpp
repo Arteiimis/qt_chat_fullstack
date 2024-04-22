@@ -1,11 +1,11 @@
 #include "qobject.h"
+#include "qpushbutton.h"
 #include "registerDialog.h"
 #include <global.h>
 #include <regex>
 
 
-registerDialog::registerDialog(QWidget* parent)
-    : QDialog(parent), ui(new Ui::registerDialog) {
+registerDialog::registerDialog(QWidget* parent) : QDialog(parent), ui(new Ui::registerDialog) {
     ui->setupUi(this);
     setWindowFlag(Qt::WindowContextHelpButtonHint, false);
     ui->pwdEdit->setEchoMode(QLineEdit::Password);
@@ -14,11 +14,29 @@ registerDialog::registerDialog(QWidget* parent)
     refreshStyle(ui->errorHint);
     // 禁用按下 esc 退出
 
-    connect(ui->cancelBtn, &QPushButton::clicked, this, &registerDialog::cancelRegister);
+    connectSlots();
 }
 
 registerDialog::~registerDialog() {
     delete ui;
+}
+
+void registerDialog::showErrTip(QString msg, bool signal) {
+    ui->errorHint->setText(msg);
+    if ( signal ) {
+        ui->errorHint->setProperty("state", "normal");
+    } else {
+        ui->errorHint->setProperty("state", "error");
+    }
+    refreshStyle(ui->errorHint);
+}
+
+void registerDialog::connectSlots() {
+    connect(ui->cancelBtn, &QPushButton::clicked, this, &registerDialog::cancelRegister);
+    connect(ui->getValidCodeBtn,
+            &QPushButton::clicked,
+            this,
+            &registerDialog::on_getVerifyCodeButton_clicked);
 }
 
 void registerDialog::on_getVerifyCodeButton_clicked() {
@@ -29,7 +47,6 @@ void registerDialog::on_getVerifyCodeButton_clicked() {
     if ( match ) {
         // TODO: 发送 HTTP 验证码请求
     } else {
-        // TODO: 显示错误提示
-        // showTips(tr("邮箱格式错误"), ui->errorHint);
+        showErrTip("邮箱格式错误", false);
     }
 }

@@ -2,6 +2,7 @@
 #define REGISTERDIALOG_H
 
 #include "qdialog.h"
+#include "qobject.h"
 #include "qtmetamacros.h"
 #include <ui_registerDialog.h>
 #include <QPushButton>
@@ -14,6 +15,10 @@ public:
     explicit registerDialog(QWidget* parent = 0);
     ~registerDialog();
 
+private:
+    void showErrTip(QString errMsg, bool signal = true);
+    void connectSlots();
+    
 signals:
     void cancelRegister();
 
