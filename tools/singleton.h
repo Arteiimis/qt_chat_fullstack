@@ -1,7 +1,6 @@
 #ifndef SINGLETON_H
 #define SINGLETON_H
 
-#include "qlogging.h"
 #include <memory>
 #include <mutex>
 #include <spdlog/spdlog.h>

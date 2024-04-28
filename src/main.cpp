@@ -4,7 +4,6 @@
 #include "qdebug.h"
 #include "qimage.h"
 #include "qlatin1stringview.h"
-#include "qlogging.h"
 #include <QApplication>
 #include <spdlog/spdlog.h>
 #include <QFile>
