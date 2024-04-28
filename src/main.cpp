@@ -6,6 +6,7 @@
 #include "qlatin1stringview.h"
 #include "qlogging.h"
 #include <QApplication>
+#include <spdlog/spdlog.h>
 #include <QFile>
 
 int main(int argc, char* argv[]) {
@@ -14,12 +15,12 @@ int main(int argc, char* argv[]) {
     QString qssPath = ":/rcs/stylesheet.qss";
     QFile   qssFile(qssPath);
     if ( qssFile.open(QIODevice::ReadOnly | QIODevice::Text) ) {
-        qDebug() << "Open qss file successfully";
+        spdlog::info("Open qss file successfully");
         QString qss = QLatin1String(qssFile.readAll());
         a.setStyleSheet(qss);
         qssFile.close();
     } else {
-        qDebug() << "Failed to open qss file";
+        spdlog::error("Failed to open qss file");
     }
 
     MainWindow w;

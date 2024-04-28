@@ -1,11 +1,7 @@
 add_rules("mode.debug", "mode.release")
 
-add_requires("jsoncpp", {
-    alias = "jsoncpp",
-    configs={
-        runtimes="MD",
-    }   
-})
+set_runtimes("MD")
+add_requires("jsoncpp", "spdlog")
 
 target("qt_chat_fullstack")
     add_rules("qt.widgetapp","qt.quickapp")
@@ -20,7 +16,7 @@ target("qt_chat_fullstack")
 
     set_toolchains("clang-cl")
     add_ldflags("/subsystem:console")
-    add_packages("jsoncpp")
+    add_packages("jsoncpp", "spdlog")	
 target_end()
 
 --

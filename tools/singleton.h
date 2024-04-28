@@ -1,10 +1,10 @@
 #ifndef SINGLETON_H
 #define SINGLETON_H
 
-#include "qdebug.h"
 #include "qlogging.h"
 #include <memory>
 #include <mutex>
+#include <spdlog/spdlog.h>
 
 
 template <class T>
@@ -26,8 +26,8 @@ public:
         return _instence;
     }
 
-    void get_raw() { qDebug() << _instence.get(); }
-    ~singleton() { qDebug() << "singleton destructed"; }
+    void get_raw() { spdlog::info("get_raw"); }
+    ~singleton() { spdlog::info("singleton destructed"); }
 };
 // 模板类显示初始化
 template <class T>
