@@ -18,7 +18,7 @@ protected:
     static std::shared_ptr<T> _instence;
 
 public:
-    static std::shared_ptr<T> getInstence() {
+    static auto getInstence() -> std::shared_ptr<T> {
         // 局部静态变量只会在第一次被调用时初始化
         // call_once 可以精准的保证只被调用一次
         static std::once_flag flag;
