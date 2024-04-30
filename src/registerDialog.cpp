@@ -5,6 +5,8 @@
 #include "qobject.h"
 #include "qpushbutton.h"
 #include "registerDialog.h"
+#include "spdlog/spdlog.h"
+
 
 
 registerDialog::registerDialog(QWidget* parent)
@@ -25,6 +27,12 @@ registerDialog::~registerDialog() {
     delete ui;
 }
 
+/**
+ * @brief 显示提示消息。    
+ * 
+ * @param msg 
+ * @param signal 用于判断用于显示的 css 样式。 
+ */
 void registerDialog::showErrTip(QString msg, bool signal) {
     ui->errorHint->setText(msg);
     if ( signal ) {
@@ -45,7 +53,7 @@ void registerDialog::initHttpHandlers() {
         }
         auto email = json_obj.value("email").toString();
         showErrTip("验证码已发送至邮箱：" + email, true);
-        qDebug() << "email is: " << email;
+        spdlog::info("email is: {}", email.toStdString());
     });
 }
 
